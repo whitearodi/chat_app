@@ -4,6 +4,8 @@ defmodule ChatApp.Chat.User do
   import Bcrypt
 
   alias ChatApp.Accounts
+  alias ChatApp.Chat.Message
+  alias ChatApp.Repo
 
   schema "users" do
     field :name, :string
@@ -11,13 +13,15 @@ defmodule ChatApp.Chat.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
-    # Assocaition with messages
+    has_many :messages, Message
+    many_to_many :rooms, ChatApp.Chat.Room, join_through: ChatApp.Chat.UserRoom
     timestamps()
   end
 
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:name, :email, :password])
+    # |> unique_constraint([:name])
     |> validate_email(opts)
     |> validate_password(opts)
   end
@@ -56,7 +60,7 @@ defmodule ChatApp.Chat.User do
   defp maybe_validate_unique_email(changeset, opts) do
     if Keyword.get(opts, :validate_email, true) do
       changeset
-      |> unsafe_validate_unique(:email, AuthSystem.Repo)
+      |> unsafe_validate_unique(:email, ChatApp.Repo)
       |> unique_constraint(:email)
     else
       changeset

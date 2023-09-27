@@ -1,0 +1,37 @@
+<div class="left-[40rem] fixed inset-y-0 right-0 z-0 hidden lg:block xl:left-[50rem]">
+ <img src="https://images.unsplash.com/photo-1602604953727-254e9efb7348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTI3fHxjaGF0JTIwYXBwfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Logo" class="mx-auto mb-8" />
+</div>
+<div class="max-w-sm flex flex-col justify-center">
+  <.header class="text-left">
+    Register Account
+    <:subtitle>
+      Have an account???
+      <.link navigate={~p"/users/log_in"} class="font-semibold text-blue-500 hover:underline">
+        Sign in
+      </.link>
+      to your account now.
+    </:subtitle>
+  </.header>
+
+  <.simple_form
+    for={@form}
+    id="registration_form"
+    phx-submit="save"
+    phx-change="validate"
+    phx-trigger-action={@trigger_submit}
+    action={~p"/users/log_in?_action=registered"}
+    method="post"
+  >
+    <.error :if={@check_errors}>
+      Oops, something went wrong! Please check the errors below.
+    </.error>
+    <.input field={@form[:name]} type="text" label="Name" required />
+    <.input field={@form[:confirmed_at]} type="date" label="Date" required />
+    <.input field={@form[:email]} type="email" label="Email" required />
+    <.input field={@form[:password]} type="password" label="Password" required />
+
+    <:actions>
+      <.button phx-disable-with="Creating account..." class="w-2/3">Create an account</.button>
+    </:actions>
+  </.simple_form>
+</div>

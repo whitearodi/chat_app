@@ -8,6 +8,7 @@ defmodule ChatApp.Chat.Room do
     field :description, :string
     field :name, :string
     has_many :messages, Message
+    many_to_many :users, ChatApp.Chat.User, join_through: ChatApp.Chat.UserRoom
     timestamps()
   end
 

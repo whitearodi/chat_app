@@ -1,6 +1,8 @@
 defmodule ChatAppWeb.Router do
   use ChatAppWeb, :router
 
+  import ChatAppWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -10,14 +12,35 @@ defmodule ChatAppWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :layouts do
+    plug(:put_root_layout, html: {ChatAppWeb.Layouts, :sidebar})
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", ChatAppWeb do
-    pipe_through :browser
+    pipe_through [:browser, :layouts ]
 
     get "/", PageController, :home
+
+    get "/users/log_out", UserSessionController, :log_out
+  end
+
+  scope "/", ChatAppWeb do
+    pipe_through [:browser, :redirect_if_users_authenticated]
+
+    live_session :redirect_if_users_authenticated do
+      # on_mount: [{AuthSystemWeb.UserAuth, :redirect_if_users_authenticated}] do
+      live "/users/register", RegistrationLive.Index, :new
+      live "/users/log_in", LoginLive.Index, :new
+      # live "/users/reset_password", ResetPasswordLive.Index, :new
+    end
+
+    post "/users/set-session", UserSessionController, :create
+
+    post "/users/log_in", UserSessionController, :create
   end
 
   # Other scopes may use custom stacks.

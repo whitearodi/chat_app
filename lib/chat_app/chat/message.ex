@@ -2,6 +2,7 @@ defmodule ChatApp.Chat.Message do
   use Ecto.Schema
   import Ecto.Changeset
   alias ChatApp.Chat.Room
+  alias ChatApp.Chat.User
 
   schema "messages" do
     field :content, :string
