@@ -13,7 +13,7 @@ defmodule ChatApp.Chat.Message do
 
   def changeset(message, params) do
     message
-    |> cast(params, [:content, :room_id])
+    |> cast(params, [:content, :room_id, :sender_id])
     |> validate_required([:content, :room_id])
   end
 end

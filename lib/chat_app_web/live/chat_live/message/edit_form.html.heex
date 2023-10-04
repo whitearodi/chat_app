@@ -1,0 +1,15 @@
+<div>
+  <.modal id="edit_message">
+    <.simple_form
+      :let={f}
+      for={@changeset}
+      phx-submit={JS.push("update") |> hide_modal("edit_message")}
+      phx-target={@myself}
+    >
+      <.input autocomplete="off" field={{f, :content}} />
+      <:actions>
+        <.button>save</.button>
+      </:actions>
+    </.simple_form>
+  </.modal>
+</div>

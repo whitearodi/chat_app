@@ -50,7 +50,10 @@ defmodule ChatApp.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:bcrypt_elixir, "~> 3.0"}
+      {:bcrypt_elixir, "~> 3.0"},
+      {:ex_heroicons, "~> 2.0.0"},
+      {:faker, "~> 0.17", only: [:dev, :test]},
+      {:timex, "~> 3.0"}
     ]
   end
 

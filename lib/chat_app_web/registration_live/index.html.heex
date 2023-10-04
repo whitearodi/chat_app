@@ -1,5 +1,9 @@
 <div class="left-[40rem] fixed inset-y-0 right-0 z-0 hidden lg:block xl:left-[50rem]">
- <img src="https://images.unsplash.com/photo-1602604953727-254e9efb7348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTI3fHxjaGF0JTIwYXBwfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60" alt="Logo" class="mx-auto mb-8" />
+  <img
+    src="https://images.unsplash.com/photo-1602604953727-254e9efb7348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTI3fHxjaGF0JTIwYXBwfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    alt="Logo"
+    class="mx-auto mb-8"
+  />
 </div>
 <div class="max-w-sm flex flex-col justify-center">
   <.header class="text-left">
@@ -31,7 +35,9 @@
     <.input field={@form[:password]} type="password" label="Password" required />
 
     <:actions>
-      <.button phx-disable-with="Creating account..." class="w-2/3">Create an account</.button>
+      <.button phx-disable-with="Creating account..." class="w-2/3">
+        Create an account <span aria-hidden="true">→</span>
+      </.button>
     </:actions>
   </.simple_form>
 </div>
